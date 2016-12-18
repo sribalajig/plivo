@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego/context"
 	"plivo/plivo.sms/model"
+	"plivo/plivo.sms/validator"
 )
 
 var FilterInboundSMS = func(ctx *context.Context) {
-	var inboundSMS model.InboundSMS
+	var sms model.SMS
 
-	json.Unmarshal(ctx.Input.RequestBody, &inboundSMS)
+	json.Unmarshal(ctx.Input.RequestBody, &sms)
 
-	if !inboundSMS.Validate() {
+	if validationResult := validator.NewSMSValidator().Validate(sms); !validationResult.IsSuccess {
 		ctx.Output.SetStatus(400)
-		ctx.Output.JSON(&struct{ message string }{"There was an error in parsing the request"}, false, true)
+		ctx.Output.JSON(validationResult, false, true)
 	}
 }
