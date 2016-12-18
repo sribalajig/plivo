@@ -8,7 +8,7 @@ import (
 
 var BasicAuthFilter = func(ctx *context.Context) {
 	authValidationResult := validator.ValidationResult{
-		Message: "You are not authorized to view the requested information",
+		Error: "You are not authorized to view the requested information",
 	}
 
 	success, creds := authentication.GetCredentials(ctx.Request.Header.Get("Authorization"))
@@ -16,6 +16,7 @@ var BasicAuthFilter = func(ctx *context.Context) {
 	if !success {
 		ctx.Output.SetStatus(403)
 		ctx.Output.JSON(authValidationResult, false, true)
+		return
 	}
 
 	authorized := authentication.NewBasicAuthenticator().Authenticate(*creds)

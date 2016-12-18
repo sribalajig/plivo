@@ -10,13 +10,13 @@ type FromNumberValidator struct {
 func (fromNumberValidator FromNumberValidator) Validate(sms model.SMS) ValidationResult {
 	if len(sms.From) == 0 {
 		return ValidationResult{
-			Message: "from is missing",
+			Error: "from is missing",
 		}
 	}
 
 	if !validate(sms.From) {
 		return ValidationResult{
-			Message: "from number is invalid",
+			Error: "from number is invalid",
 		}
 	}
 
