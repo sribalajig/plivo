@@ -24,6 +24,6 @@ func (smsValidator SMSValidator) Validate(sms model.SMS) ValidationResult {
 
 func NewSMSValidator() SMSValidator {
 	return SMSValidator{
-		validators: []Validator{FromNumberValidator{}, ToNumberValidator{}},
+		validators: []Validator{FromNumberValidator{}, ToNumberValidator{}, TextValidator{}},
 	}
 }
