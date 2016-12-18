@@ -17,7 +17,7 @@ func (smsController *SMSController) Inbound() {
 
 	json.Unmarshal(smsController.Ctx.Input.RequestBody, &sms)
 
-	err := service.ProcessInboundSMS(sms)
+	err := service.NewSMSService().ProcessInboundSMS(sms)
 
 	if err == nil {
 		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Message: "inbound sms ok”"})
@@ -33,7 +33,7 @@ func (smsController *SMSController) Outbound() {
 
 	json.Unmarshal(smsController.Ctx.Input.RequestBody, &sms)
 
-	err := service.ProcessOutboundSMS(sms)
+	err := service.NewSMSService().ProcessOutboundSMS(sms)
 
 	if err == nil {
 		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Message: "outbound sms ok”"})
