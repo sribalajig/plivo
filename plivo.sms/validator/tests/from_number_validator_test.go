@@ -24,7 +24,7 @@ func TestFromNumberInSMS(t *testing.T) {
 		validationResult := fromNumberValidator.Validate(model.NewSMS(testCase.FromNumber, "", ""))
 
 		if testCase.IsValid != validationResult.IsSuccess {
-			t.Errorf("FromNumber : %s, expected validation result was %t, actual is %t", testCase.FromNumber, testCase.IsValid, validationResult.IsSuccess)
+			t.Errorf("From Number : %s, expected validation result is %t, actual is %t", testCase.FromNumber, testCase.IsValid, validationResult.IsSuccess)
 			t.Fail()
 		}
 	}
