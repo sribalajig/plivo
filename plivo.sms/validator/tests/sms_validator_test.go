@@ -14,19 +14,21 @@ var testCases = []struct {
 }{
 	{"", "", "", false},
 	{"123", "123", "Hello", false},
-	{"123456", "123456", "", true},
+	{"123456", "123456", "", false},
 	{"1234567891234567", "123456", "", false},
 	{"12345678912345678", "", "", false},
+	{"123456", "123456", "hello world", true},
 }
 
 func TestSMSValidator(t *testing.T) {
-	fromNumberValidator := validator.FromNumberValidator{}
+	smsValidator := validator.NewSMSValidator()
 
 	for _, testCase := range testCases {
-		validationResult := fromNumberValidator.Validate(model.NewSMS(testCase.FromNumber, testCase.ToNumber, testCase.Text))
+		sms := model.NewSMS(testCase.FromNumber, testCase.ToNumber, testCase.Text)
+		validationResult := smsValidator.Validate(sms)
 
 		if testCase.IsValid != validationResult.IsSuccess {
-			t.Errorf("From Number : %s, expected validation result is %t, actual is %t", testCase.FromNumber, testCase.IsValid, validationResult.IsSuccess)
+			t.Errorf("SMS: %q, expected validation result is %t, actual is %t", sms, testCase.IsValid, validationResult.IsSuccess)
 			t.Fail()
 		}
 	}

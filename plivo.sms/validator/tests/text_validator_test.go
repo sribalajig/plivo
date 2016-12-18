@@ -16,10 +16,10 @@ var textTests = []struct {
 }
 
 func TestTextInSMS(t *testing.T) {
-	toNumberValidator := validator.TextValidator{}
+	textValidator := validator.TextValidator{}
 
 	for _, testCase := range textTests {
-		validationResult := toNumberValidator.Validate(model.NewSMS("", "", testCase.Text))
+		validationResult := textValidator.Validate(model.NewSMS("", "", testCase.Text))
 
 		if testCase.IsValid != validationResult.IsSuccess {
 			t.Errorf("Text : %s, expected validation result is %t, actual is %t", testCase.Text, testCase.IsValid, validationResult.IsSuccess)
