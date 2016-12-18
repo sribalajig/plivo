@@ -8,7 +8,7 @@ type SMSController struct {
 	beego.Controller
 }
 
-func (smsController *SMSController) InBouund() {
+func (smsController *SMSController) InBound() {
 	smsController.Data["json"] = "SMS controller works"
 
 	smsController.ServeJSON()

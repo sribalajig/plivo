@@ -35,7 +35,8 @@ func init() {
 	)
 	beego.AddNamespace(ns)
 
-	beego.Router("/inbound/sms", &controllers.SMSController{}, "post:InBouund")
+	beego.Router("/inbound/sms", &controllers.SMSController{}, "post:InBound")
 
+	beego.InsertFilter("/*", beego.BeforeRouter, filters.BasicAuthFilter)
 	beego.InsertFilter("/inbound/sms", beego.BeforeRouter, filters.FilterInboundSMS)
 }
