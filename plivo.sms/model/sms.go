@@ -7,7 +7,10 @@ type SMS struct {
 }
 
 func (sms SMS) Contains(pattern string) bool {
-	return true
+	return sms.Text == pattern ||
+		sms.Text == pattern+"\n" ||
+		sms.Text == pattern+"\r" ||
+		sms.Text == pattern+"\r\n"
 }
 
 var NewSMS = func(from string, to string, text string) SMS {
