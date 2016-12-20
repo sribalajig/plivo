@@ -16,25 +16,6 @@ import (
 )
 
 func init() {
-	ns := beego.NewNamespace("/api",
-		beego.NSNamespace("/object",
-			beego.NSInclude(
-				&controllers.ObjectController{},
-			),
-		),
-		beego.NSNamespace("/user",
-			beego.NSInclude(
-				&controllers.UserController{},
-			),
-		),
-		beego.NSNamespace("/user",
-			beego.NSInclude(
-				&controllers.UserController{},
-			),
-		),
-	)
-	beego.AddNamespace(ns)
-
 	beego.Router("/inbound/sms", &controllers.SMSController{}, "post:Inbound")
 	beego.Router("/outbound/sms", &controllers.SMSController{}, "post:Outbound")
 

@@ -5,7 +5,6 @@ import (
 	_ "github.com/lib/pq"
 	"plivo/plivo.persistence/postgre"
 	"plivo/plivo.persistence/redis"
-	_ "plivo/plivo.sms.api/docs"
 	_ "plivo/plivo.sms.api/routers"
 
 	"github.com/astaxie/beego"
@@ -24,5 +23,6 @@ func main() {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
+
 	beego.Run()
 }
