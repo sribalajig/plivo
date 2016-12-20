@@ -12,7 +12,7 @@ func GetAccount(userName string) model.Account {
 
 	var account model.Account
 
-	qs.Filter("username", "plivo1").One(&account)
+	qs.Filter("username", userName).One(&account)
 
 	return account
 }

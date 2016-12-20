@@ -3,6 +3,7 @@ package filters
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/context"
+	"plivo/plivo.core/phone_numbers/repository"
 	"plivo/plivo.sms/model"
 	"plivo/plivo.sms/validator"
 )
@@ -12,8 +13,13 @@ var FilterInboundSMS = func(ctx *context.Context) {
 
 	json.Unmarshal(ctx.Input.RequestBody, &sms)
 
-	if validationResult := validator.NewSMSValidator().Validate(sms); !validationResult.IsSuccess {
+	numberExists := repository.PhoneNumberRepository{}.Exists(sms.To)
+
+	if !numberExists {
 		ctx.Output.SetStatus(400)
-		ctx.Output.JSON(validationResult, false, true)
+		ctx.Output.JSON(validator.ValidationResult{
+			Error: "to parameter not found",
+		}, false, true)
 	}
+
 }

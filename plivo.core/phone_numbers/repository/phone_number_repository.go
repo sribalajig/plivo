@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"plivo/plivo.core/phone_numbers/model"
+	"plivo/plivo.persistence/postgre"
 )
 
 type PhoneNumberRepository struct {
 }
 
-func (phoneNumberRepository PhoneNumberRepository) Get(number string) (model.PhoneNumber, error) {
-	return model.PhoneNumber{}, nil
+func (phoneNumberRepository PhoneNumberRepository) Exists(number string) bool {
+	return postgre.Exists(number)
 }

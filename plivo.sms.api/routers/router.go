@@ -39,5 +39,6 @@ func init() {
 	beego.Router("/outbound/sms", &controllers.SMSController{}, "post:Outbound")
 
 	beego.InsertFilter("/*", beego.BeforeRouter, filters.BasicAuthFilter)
+	beego.InsertFilter("/inbound/sms", beego.BeforeRouter, filters.FilterSMS)
 	beego.InsertFilter("/inbound/sms", beego.BeforeRouter, filters.FilterInboundSMS)
 }
