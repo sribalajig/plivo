@@ -1,5 +1,11 @@
 package model
 
+import (
+	"plivo/plivo.core/accounts/model"
+)
+
 type PhoneNumber struct {
-	Number string
+	Id      int
+	Number  string         `orm:"column(number)"`
+	Account *model.Account `orm:"rel(fk)"`
 }

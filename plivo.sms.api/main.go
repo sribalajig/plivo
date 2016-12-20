@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	_ "github.com/lib/pq"
+	"plivo/plivo.persistence/postgre"
 	_ "plivo/plivo.sms.api/docs"
 	_ "plivo/plivo.sms.api/routers"
 
@@ -8,6 +11,12 @@ import (
 )
 
 func main() {
+	if postgre.Initialize() != nil {
+		fmt.Println("Failed to inititalize Postgre. Exiting...")
+
+		return
+	}
+
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
