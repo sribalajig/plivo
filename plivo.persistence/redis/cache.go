@@ -19,3 +19,11 @@ func Delete(key string) (int64, error) {
 
 	return val, err
 }
+
+func Increment(key string) (int64, error) {
+	return client.Incr(key).Result()
+}
+
+func Expire(key string, expiration time.Duration) (bool, error) {
+	return client.Expire(key, expiration).Result()
+}
