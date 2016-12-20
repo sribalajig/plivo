@@ -22,3 +22,19 @@ func TestSetStop(t *testing.T) {
 
 	redis.Delete("from:234567;to:123456")
 }
+
+func TestUpdateSentSMSCount(t *testing.T) {
+	redis.Initialize()
+
+	repository.SMSRepository{}.UpdateSentSMSCount(model.NewSMS("123456", "234567", "Hello"))
+	repository.SMSRepository{}.UpdateSentSMSCount(model.NewSMS("123456", "456789", "hi"))
+	repository.SMSRepository{}.UpdateSentSMSCount(model.NewSMS("123456", "987654", "hi there"))
+
+	val, _ := redis.Get("from:123456")
+
+	if val != "3" {
+		t.Errorf("Expected %s, got %s", "2", val)
+	}
+
+	redis.Delete("from:123456")
+}
