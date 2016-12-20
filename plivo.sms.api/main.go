@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	"plivo/plivo.persistence/postgre"
+	"plivo/plivo.persistence/redis"
 	_ "plivo/plivo.sms.api/docs"
 	_ "plivo/plivo.sms.api/routers"
 
@@ -16,6 +17,8 @@ func main() {
 
 		return
 	}
+
+	redis.Initialize()
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true

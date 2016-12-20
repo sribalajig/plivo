@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"plivo/plivo.sms/model"
 	"plivo/plivo.sms/service"
@@ -20,12 +21,10 @@ func (smsController *SMSController) Inbound() {
 	err := service.NewSMSService().ProcessInboundSMS(sms)
 
 	if err == nil {
-		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Message: "inbound sms ok”"})
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Message: "inbound sms ok”"}, false, false)
 	} else {
-		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Error: "unknown failure””"})
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: err.Error()}, false, false)
 	}
-
-	smsController.ServeJSON()
 }
 
 func (smsController *SMSController) Outbound() {
@@ -36,9 +35,11 @@ func (smsController *SMSController) Outbound() {
 	err := service.NewSMSService().ProcessOutboundSMS(sms)
 
 	if err == nil {
-		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Message: "outbound sms ok”"})
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Message: "outbound sms ok"}, false, false)
 	} else {
-		smsController.Data["json"], _ = json.Marshal(validator.ValidationResult{Error: "unknown failure””"})
+		fmt.Println(err)
+
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: err.Error()}, false, false)
 	}
 
 	smsController.ServeJSON()
