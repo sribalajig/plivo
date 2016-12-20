@@ -23,7 +23,7 @@ func (smsController *SMSController) Inbound() {
 		smsController.Ctx.Output.JSON(validator.ValidationResult{Message: "inbound sms ok”"}, false, false)
 	} else {
 		smsController.Ctx.Output.SetStatus(500)
-		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: err.Error()}, false, false)
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: "unknown failure"}, false, false)
 	}
 }
 
@@ -38,7 +38,7 @@ func (smsController *SMSController) Outbound() {
 		smsController.Ctx.Output.JSON(validator.ValidationResult{Message: "outbound sms ok"}, false, false)
 	} else {
 		smsController.Ctx.Output.SetStatus(500)
-		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: err.Error()}, false, false)
+		smsController.Ctx.Output.JSON(validator.ValidationResult{Error: "unknown failure"}, false, false)
 	}
 
 	smsController.ServeJSON()
