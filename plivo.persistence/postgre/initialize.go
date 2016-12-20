@@ -1,7 +1,6 @@
 package postgre
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/lib/pq"
 	"plivo/plivo.core/accounts/model"
@@ -17,25 +16,13 @@ func Initialize() error {
 		return err
 	}
 
-	acc := new(model.Account)
+	account := new(model.Account)
 
-	orm.RegisterModel(acc)
+	orm.RegisterModel(account)
 
 	phoneNumber := new(pn.PhoneNumber)
 
 	orm.RegisterModel(phoneNumber)
-
-	o := orm.NewOrm()
-
-	qs := o.QueryTable(acc)
-
-	var account model.Account
-
-	fmt.Println("this is the name")
-
-	qs.Filter("username", "plivo1").One(&account)
-
-	fmt.Println(account)
 
 	return nil
 }
